@@ -87,8 +87,6 @@ chai.use(function (chai) {
     return this;
   };
 
-  // data
-
   jQuery.each(['visible', 'hidden', 'selected', 'checked', 'disabled'], function (i, attr) {
     Object.defineProperty(chai.Assertion.prototype, attr, {
       get: function () {
