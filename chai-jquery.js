@@ -95,14 +95,16 @@ chai.use(function (chai) {
           , 'expected ' + this.inspect + ' to be ' + attr
           , 'expected ' + this.inspect + ' not to be ' + attr);
         return this;
-      }
+      },
+      configurable: true
     });
   });
 
   function override(name, getter) {
     var _super = Object.getOwnPropertyDescriptor(chai.Assertion.prototype, name);
     Object.defineProperty(chai.Assertion.prototype, name, {
-      get: getter(_super.get)
+      get: getter(_super.get),
+      configurable: true
     });
   }
 
