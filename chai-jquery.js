@@ -1,19 +1,19 @@
-(function (chai_jquery) {
+(function (chaiJquery) {
   // Module systems magic dance.
   if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
     // NodeJS
-    module.exports = chai_jquery;
+    module.exports = chaiJquery;
   } else if (typeof define === "function" && define.amd) {
     // AMD
     define(function () {
-      return chai_jquery;
+      return chaiJquery;
     });
   } else {
     // Other environment (usually <script> tag): pass into global chai
     var global = (false || eval)("this");
-    global.chai.use(chai_jquery);
+    global.chai.use(chaiJquery);
   }
-}(function chai_jquery(chai) {
+}(function chaiJquery(chai) {
   var inspect = chai.inspect;
 
   jQuery.fn.inspect = function (depth) {
