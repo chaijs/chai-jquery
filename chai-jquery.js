@@ -13,7 +13,7 @@
     var global = (false || eval)("this");
     global.chai.use(chaiJquery);
   }
-}(function chaiJquery(chai) {
+}(function (chai) {
   var inspect = chai.inspect;
 
   jQuery.fn.inspect = function (depth) {
