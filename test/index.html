@@ -10,7 +10,9 @@
     <script>
       mocha.setup('bdd');
       var should = chai.should();
-      window.onload = mocha.run;
+      window.onload = function () {
+        mocha.run();
+      };
     </script>
     <script src="jquery-inspect-spec.js"></script>
     <script src="chai-jquery-spec.js"></script>
