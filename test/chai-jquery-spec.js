@@ -1,12 +1,16 @@
 describe("jQuery assertions", function(){
-  var inspect = chai.inspect;
+  var inspect;
 
-  chai.use(function (chai) {
+  chai.use(function (chai, utils) {
+    inspect = utils.inspect;
+
     chai.Assertion.prototype.fail = function (message) {
-      new chai.Assertion(this.obj).is.a('function');
+      var obj = utils.flag(this, 'object');
+
+      new chai.Assertion(obj).is.a('function');
 
       try {
-        this.obj();
+        obj();
         this.assert(false, 'expected ' + this.inspect + ' to fail');
       } catch (err) {
         this.assert(

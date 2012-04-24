@@ -17,7 +17,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "chai": "0.3.3",
+    "chai": "git://github.com/logicalparadox/chai.git",
     "mocha": "*"
   }
 }

@@ -13,8 +13,9 @@
     var global = (false || eval)("this");
     global.chai.use(chaiJquery);
   }
-}(function (chai) {
-  var inspect = chai.inspect;
+}(function (chai, utils) {
+  var inspect = utils.inspect,
+      flag = utils.flag;
 
   jQuery.fn.inspect = function (depth) {
     var el = jQuery('<div />').append(this.clone());
@@ -27,127 +28,124 @@
     return el.html();
   };
 
-  chai.Assertion.prototype.attr = function (name, val) {
-    var actual = this.obj.attr(name);
+  utils.addMethod(chai.Assertion, 'attr', function (name, val) {
+    var actual = flag(this, 'object').attr(name);
 
-    if (!this.negate || undefined === val) {
+    if (!flag(this, 'negate') || undefined === val) {
       this.assert(
           undefined !== actual
-        , 'expected ' + this.inspect + ' to have a ' + inspect(name) + ' attribute'
-        , 'expected ' + this.inspect + ' not to have a ' + inspect(name) + ' attribute');
+        , 'expected #{this} to have a #{exp} attribute'
+        , 'expected #{this} not to have a #{exp} attribute'
+        , name
+      );
     }
 
     if (undefined !== val) {
       this.assert(
           val === actual
-        , 'expected ' + this.inspect + ' to have a ' + inspect(name) + ' attribute with the value ' +
-            inspect(val) + ', but the value was ' + inspect(actual)
-        , 'expected ' + this.inspect + ' not to have a ' + inspect(name) + ' attribute with the value ' +
-            inspect(val));
+        , 'expected #{this} to have a ' + inspect(name) + ' attribute with the value #{exp}, but the value was #{act}'
+        , 'expected #{this} not to have a ' + inspect(name) + ' attribute with the value #{act}'
+        , val
+        , actual
+      );
     }
 
-    this.obj = actual;
-    return this;
-  };
+    flag(this, 'object', actual);
+  });
 
-  chai.Assertion.prototype.data = function (name, val) {
+  utils.addMethod(chai.Assertion, 'data', function (name, val) {
     // Work around a chai bug (https://github.com/logicalparadox/chai/issues/16)
-    if (this.negate && undefined !== val && undefined === this.obj.data(name)) {
-      return this;
+    if (flag(this, 'negate') && undefined !== val && undefined === flag(this, 'object').data(name)) {
+      return;
     }
 
-    var assertion = new chai.Assertion(this.obj.data());
-    if (this.negate)
+    var assertion = new chai.Assertion(flag(this, 'object').data());
+    if (flag(this, 'negate'))
       assertion = assertion.not;
-    return assertion.property(name, val);
-  };
+    assertion.property(name, val);
+  });
 
-  chai.Assertion.prototype.class = function (className) {
+  utils.addMethod(chai.Assertion, 'class', function (className) {
     this.assert(
-        this.obj.hasClass(className)
-      , 'expected ' + this.inspect + ' to have class ' + inspect(className)
-      , 'expected ' + this.inspect + ' not to have class ' + inspect(className));
-    return this;
-  };
+        flag(this, 'object').hasClass(className)
+      , 'expected #{this} to have class #{exp}'
+      , 'expected #{this} not to have class #{exp}'
+      , className
+    );
+  });
 
-  chai.Assertion.prototype.id = function (id) {
+  utils.addMethod(chai.Assertion, 'id', function (id) {
     this.assert(
-        this.obj.attr('id') === id
-      , 'expected ' + this.inspect + ' to have id ' + inspect(id)
-      , 'expected ' + this.inspect + ' not to have id ' + inspect(id));
-    return this;
-  };
+        flag(this, 'object').attr('id') === id
+      , 'expected #{this} to have id #{exp}'
+      , 'expected #{this} not to have id #{exp}'
+      , id
+    );
+  });
 
-  chai.Assertion.prototype.html = function (html) {
+  utils.addMethod(chai.Assertion, 'html', function (html) {
     this.assert(
-        this.obj.html() === html
-      , 'expected ' + this.inspect + ' to have HTML ' + inspect(html)
-      , 'expected ' + this.inspect + ' not to have HTML ' + inspect(html));
-    return this;
-  };
+        flag(this, 'object').html() === html
+      , 'expected #{this} to have HTML #{exp}'
+      , 'expected #{this} not to have HTML #{exp}'
+      , html
+    );
+  });
 
-  chai.Assertion.prototype.text = function (text) {
+  utils.addMethod(chai.Assertion, 'text', function (text) {
     this.assert(
-        this.obj.text() === text
-      , 'expected ' + this.inspect + ' to have text ' + inspect(text)
-      , 'expected ' + this.inspect + ' not to have text ' + inspect(text));
-    return this;
-  };
+        flag(this, 'object').text() === text
+      , 'expected #{this} to have text #{exp}'
+      , 'expected #{this} not to have text #{exp}'
+      , text
+    );
+  });
 
-  chai.Assertion.prototype.value = function (value) {
+  utils.addMethod(chai.Assertion, 'value', function (value) {
     this.assert(
-        this.obj.val() === value
-      , 'expected ' + this.inspect + ' to have value ' + inspect(value)
-      , 'expected ' + this.inspect + ' not to have value ' + inspect(value));
-    return this;
-  };
+        flag(this, 'object').val() === value
+      , 'expected #{this} to have value #{exp}'
+      , 'expected #{this} not to have value #{exp}'
+      , value
+    );
+  });
 
   jQuery.each(['visible', 'hidden', 'selected', 'checked', 'disabled'], function (i, attr) {
-    Object.defineProperty(chai.Assertion.prototype, attr, {
-      get: function () {
-        this.assert(
-            this.obj.is(':' + attr)
-          , 'expected ' + this.inspect + ' to be ' + attr
-          , 'expected ' + this.inspect + ' not to be ' + attr);
-        return this;
-      },
-      configurable: true
+    utils.addProperty(chai.Assertion, attr, function () {
+      this.assert(
+          flag(this, 'object').is(':' + attr)
+        , 'expected #{this} to be ' + attr
+        , 'expected #{this} not to be ' + attr);
     });
   });
 
-  function override(name, getter) {
-    var _super = Object.getOwnPropertyDescriptor(chai.Assertion.prototype, name);
-    Object.defineProperty(chai.Assertion.prototype, name, {
-      get: getter(_super.get),
-      configurable: true
-    });
-  }
-
-  override('exist', function (_super) {
+  utils.overwriteProperty(chai.Assertion, 'exist', function (_super) {
     return function () {
-      if (this.obj instanceof jQuery) {
+      var obj = flag(this, 'object');
+      if (obj instanceof jQuery) {
         this.assert(
-            this.obj.length > 0
-          , 'expected ' + inspect(this.obj.selector) + ' to exist'
-          , 'expected ' + inspect(this.obj.selector) + ' not to exist');
-        return this;
+            obj.length > 0
+          , 'expected ' + inspect(obj.selector) + ' to exist'
+          , 'expected ' + inspect(obj.selector) + ' not to exist');
       } else {
-        return _super.call(this);
+        _super.apply(this, arguments);
       }
     };
   });
 
-  override('be', function (_super) {
+  utils.overwriteProperty(chai.Assertion, 'be', function (_super) {
     return function () {
       var be = function (selector) {
-        if (this.obj instanceof jQuery) {
+        var obj = flag(this, 'object');
+        if (obj instanceof jQuery) {
           this.assert(
-              this.obj.is(selector)
-            , 'expected ' + this.inspect + ' to be ' + inspect(selector)
-            , 'expected ' + this.inspect + ' not to be ' + inspect(selector));
-          return this;
+              obj.is(selector)
+            , 'expected #{this} to be #{exp}'
+            , 'expected #{this} not to be #{exp}'
+            , selector
+          );
         } else {
-          return _super.call(this);
+          _super.apply(this, arguments);
         }
       };
       be.__proto__ = this;
@@ -155,29 +153,34 @@
     }
   });
 
-  var match = chai.Assertion.prototype.match;
-  chai.Assertion.prototype.match = function (selector) {
-    if (this.obj instanceof jQuery) {
-      this.assert(
-          this.obj.is(selector)
-        , 'expected ' + this.inspect + ' to match ' + inspect(selector)
-        , 'expected ' + this.inspect + ' not to match ' + inspect(selector));
-      return this;
-    } else {
-      return match.call(this, selector);
+  utils.overwriteMethod(chai.Assertion, 'match', function (_super) {
+    return function (selector) {
+      var obj = flag(this, 'object');
+      if (obj instanceof jQuery) {
+        this.assert(
+            obj.is(selector)
+          , 'expected #{this} to match #{exp}'
+          , 'expected #{this} not to match #{exp}'
+          , selector
+        );
+      } else {
+        _super.apply(this, arguments);
+      }
     }
-  };
+  });
 
-  override('contain', function (_super) {
+  utils.overwriteProperty(chai.Assertion, 'contain', function (_super) {
     return function () {
-      _super.call(this);
+      _super.apply(this, arguments);
       var contain = function (selector) {
-        if (this.obj instanceof jQuery) {
+        var obj = flag(this, 'object');
+        if (obj instanceof jQuery) {
           this.assert(
-              this.obj.find(selector).length > 0
-            , 'expected ' + this.inspect + ' to contain ' + inspect(selector)
-            , 'expected ' + this.inspect + ' not to contain ' + inspect(selector));
-          return this;
+              obj.find(selector).length > 0
+            , 'expected #{this} to contain #{exp}'
+            , 'expected #{this} not to contain #{exp}'
+            , selector
+          );
         }
       };
       contain.__proto__ = this;
