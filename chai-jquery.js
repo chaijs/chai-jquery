@@ -172,14 +172,14 @@
   utils.overwriteProperty(chai.Assertion, 'contain', function (_super) {
     return function () {
       _super.apply(this, arguments);
-      var contain = function (selector) {
+      var contain = function (text) {
         var obj = flag(this, 'object');
         if (obj instanceof jQuery) {
           this.assert(
-              obj.find(selector).length > 0
+              obj.is(':contains(\'' + text + '\')')
             , 'expected #{this} to contain #{exp}'
             , 'expected #{this} not to contain #{exp}'
-            , selector
+            , text
           );
         }
       };
@@ -187,5 +187,25 @@
       return contain;
     }
   });
-}));
 
+  utils.overwriteProperty(chai.Assertion, 'have', function (_super) {
+    return function () {
+      _super.apply(this, arguments);
+      var have = function (selector) {
+        var obj = flag(this, 'object');
+        if (obj instanceof jQuery) {
+          this.assert(
+              // Using find() rather than has() to work around a jQuery bug:
+              //   http://bugs.jquery.com/ticket/11706
+              obj.find(selector).length > 0
+            , 'expected #{this} to have #{exp}'
+            , 'expected #{this} not to have #{exp}'
+            , selector
+          );
+        }
+      };
+      have.__proto__ = this;
+      return have;
+    }
+  });
+}));
