@@ -121,6 +121,12 @@ is not called as a function, the original implementation will be called.
     $('body').should.have('h1');
     expect($('#content')).to.have('div');
 
+## Contributing
+
+To run the test suite, run `npm install` (requires
+[Node.js](http://nodejs.org/) to be installed on your system), and open
+`test/index.html` in your web browser.
+
 ## License
 
 Copyright (c) 2012 John Firebaugh
