@@ -171,7 +171,7 @@
 
   chai.Assertion.overwriteProperty('contain', function (_super) {
     return function () {
-      _super.apply(this, arguments);
+      _super.call(this);
       var contain = function (text) {
         var obj = flag(this, 'object');
         if (obj instanceof jQuery) {
@@ -192,7 +192,7 @@
 
   chai.Assertion.overwriteProperty('have', function (_super) {
     return function () {
-      _super.apply(this, arguments);
+      _super.call(this);
       var have = function (selector) {
         var obj = flag(this, 'object');
         if (obj instanceof jQuery) {
