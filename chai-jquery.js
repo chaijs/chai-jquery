@@ -181,6 +181,8 @@
             , 'expected #{this} not to contain #{exp}'
             , text
           );
+        } else {
+          Function.prototype.apply.call(_super.call(this), this, arguments);
         }
       };
       contain.__proto__ = this;

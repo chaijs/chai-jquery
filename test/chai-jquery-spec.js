@@ -4,25 +4,25 @@ describe("jQuery assertions", function(){
   chai.use(function (chai, utils) {
     inspect = utils.inspect;
 
-    chai.Assertion.prototype.fail = function (message) {
+    chai.Assertion.addMethod('fail', function (message) {
       var obj = utils.flag(this, 'object');
 
       new chai.Assertion(obj).is.a('function');
 
       try {
         obj();
-        this.assert(false, 'expected #{this} to fail');
       } catch (err) {
         this.assert(
             err instanceof chai.AssertionError
           , 'expected #{this} to fail, but it threw ' + inspect(err));
         this.assert(
             err.message === message
-          , 'expected #{this} to fail with ' + inspect(message) + ', but got ' + inspect(err.message))
+          , 'expected #{this} to fail with ' + inspect(message) + ', but got ' + inspect(err.message));
+        return;
       }
 
-      return this;
-    };
+      this.assert(false, 'expected #{this} to fail');
+    });
   });
 
   describe("attr", function(){
@@ -512,8 +512,13 @@ describe("jQuery assertions", function(){
 
   describe("contain", function(){
     it("preserves existing behavior on non-jQuery objects", function(){
-      ("example text").should.contain('example');
+      "example text".should.contain('example');
+      "foo".should.not.contain('bar');
       ({foo: 1, bar: 2}).should.contain.keys('foo');
+
+      (function(){
+        "foo".should.contain('bar');
+      }).should.fail("expected 'foo' to include 'bar'")
     });
 
     var subject = $('<div><span>example text</span></div>');
