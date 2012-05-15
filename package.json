@@ -3,7 +3,7 @@
   "name": "chai-jquery",
   "description": "jQuery assertions for the chai assertion library",
   "keywords": [ "test", "assertion", "assert", "testing", "jQuery" ],
-  "version": "1.0.0-rc1",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/jfirebaugh/chai-jquery"
@@ -15,9 +15,10 @@
   "engines": {
     "node": ">= 0.4.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "chai": ">= 1.0.0"
+  },
   "devDependencies": {
-    "chai": "git://github.com/logicalparadox/chai.git",
-    "mocha": "*"
+    "mocha": ">= 1.0.0"
   }
 }
