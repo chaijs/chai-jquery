@@ -192,10 +192,9 @@
 
   chai.Assertion.overwriteProperty('have', function (_super) {
     return function () {
-      _super.call(this);
-      var have = function (selector) {
-        var obj = flag(this, 'object');
-        if (obj instanceof jQuery) {
+      var obj = flag(this, 'object');
+      if (obj instanceof jQuery) {
+        var have = function (selector) {
           this.assert(
               // Using find() rather than has() to work around a jQuery bug:
               //   http://bugs.jquery.com/ticket/11706
@@ -204,10 +203,12 @@
             , 'expected #{this} not to have #{exp}'
             , selector
           );
-        }
-      };
-      have.__proto__ = this;
-      return have;
+        };
+        have.__proto__ = this;
+        return have;
+      } else {
+        _super.call(this);
+      }
     }
   });
 }));
