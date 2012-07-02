@@ -9,9 +9,8 @@
       return chaiJquery;
     });
   } else {
-    // Other environment (usually <script> tag): pass into global chai
-    var global = (false || eval)("this");
-    global.chai.use(chaiJquery);
+    // Other environment (usually <script> tag): plug in to global chai instance directly.
+    chai.use(chaiJquery);
   }
 }(function (chai, utils) {
   var inspect = utils.inspect,
