@@ -591,7 +591,7 @@ describe("jQuery assertions", function(){
     it("preserves existing behavior on non-jQuery objects", function(){
       ({foo: 1, bar: 2}).should.have.property('foo');
     });
-    
+
     it("preserves length assertion on non-jQuery objects", function(){
       (['foo','bar']).should.have.length(2);
     });
