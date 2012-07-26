@@ -109,6 +109,21 @@
     );
   });
 
+  chai.Assertion.addMethod('css', function (css) {
+    var obj = flag(this, 'object');
+    var currentCss = {};
+    for (var prop in css) {
+      currentCss[prop] = css[prop]
+      this.assert(
+          obj.css(prop) === css[prop]
+        , 'expected #{this} to have css #{exp}'
+        , 'expected #{this} to not have css #{exp}'
+        , currentCss
+      );
+      delete currentCss[prop]
+    }
+  });
+
   jQuery.each(['visible', 'hidden', 'selected', 'checked', 'disabled'], function (i, attr) {
     chai.Assertion.addProperty(attr, function () {
       this.assert(
