@@ -454,6 +454,44 @@ describe("jQuery assertions", function(){
     });
   });
 
+  describe("empty", function(){
+    it("preserves existing behavior on non-jQuery objects", function(){
+      ({}).should.be.empty;
+    });
+
+    var empty, nonempty;
+
+    beforeEach(function(){
+      $('#mocha').append('<div class="empty"></div>').append('<div class="nonempty"><span></span></div>');
+      empty = $('.empty');
+      nonempty = $('.nonempty');
+    });
+
+    afterEach(function(){
+      $(empty, nonempty).remove();
+    });
+
+    it("passes when the elment has no children", function(){
+      empty.should.be.empty;
+    });
+
+    it("passes negated when the elment has children", function(){
+      nonempty.should.not.be.empty;
+    });
+
+    it("fails when the elment has children", function(){
+      (function(){
+        nonempty.should.be.empty;
+      }).should.fail("expected '.nonempty' to be empty");
+    });
+
+    it("fails negated when the elment has no children", function(){
+      (function(){
+        empty.should.not.be.empty;
+      }).should.fail("expected '.empty' not to be empty");
+    });
+  });
+
   describe("match", function(){
     it("preserves existing behavior on non-jQuery objects", function(){
       ("hello").should.match(/ello/);

@@ -132,6 +132,20 @@
     };
   });
 
+  chai.Assertion.overwriteProperty('empty', function (_super) {
+    return function () {
+      var obj = flag(this, 'object');
+      if (obj instanceof jQuery) {
+        this.assert(
+            obj.children().length === 0
+          , 'expected ' + inspect(obj.selector) + ' to be empty'
+          , 'expected ' + inspect(obj.selector) + ' not to be empty');
+      } else {
+        _super.apply(this, arguments);
+      }
+    };
+  });
+
   chai.Assertion.overwriteProperty('be', function (_super) {
     return function () {
       var be = function (selector) {
