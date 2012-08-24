@@ -2,7 +2,7 @@ describe("jQuery assertions", function(){
   var inspect;
 
   chai.use(function (chai, utils) {
-    inspect = utils.inspect;
+    inspect = utils.objDisplay;
 
     chai.Assertion.addMethod('fail', function (message) {
       var obj = utils.flag(this, 'object');
