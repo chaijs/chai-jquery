@@ -21,6 +21,14 @@ Optionally, assert a particular value as well. The return value is available for
     expect($('body')).to.have.attr('foo', 'bar');
     expect($('body')).to.have.attr('foo').match(/bar/);
 
+### `css(name[, value])`
+Assert that the first element of the selection has the given CSS property, using [`.css()`](http://api.jquery.com/css/).
+Optionally, assert a particular value as well. The return value is available for chaining.
+
+    $('#header').should.have.css('background');
+    expect($('body')).to.have.css('background-color', '#ffffff');
+    expect($('body')).to.have.css('font-family').match(/sans-serif/);
+
 ### `data(name[, value])`
 Assert that the first element of the selection has the given data value, using [`.data()`](http://api.jquery.com/data/).
 Optionally, assert a particular value as well. The return value is available for chaining.
@@ -88,6 +96,12 @@ Assert that the first element of the selection is disabled, using [`.is(':disabl
 
     $('.disabled').should.be.disabled;
     expect($('input')).not.to.be.disabled;
+
+### `empty`
+Assert that the first element of the selection is empty, using [`.is(':empty')`](http://api.jquery.com/empty-selector/).
+
+    $('.empty').should.be.empty;
+    expect($('body')).not.to.be.empty;
 
 ### `exist`
 Assert that the selection is not empty. Note that this overrides the built-in chai assertion. If the object asserted

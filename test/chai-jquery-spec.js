@@ -152,60 +152,62 @@ describe("jQuery assertions", function(){
   describe("css", function(){
     var subject = $('<div style="background-color:red;position:absolute;"></div>');
 
-    describe("when only one css attribute is passed", function(){
-      it("passes when the elemnt has the given css attribute", function(){
-        subject.should.have.css({backgroundColor: 'red'});
+    describe("when only property name is provided", function(){
+      it("passes when the element's css has the property", function(){
+        subject.should.have.css('background-color');
       });
 
-      it("passes negated when the elemnt does not have the given css attribute", function(){
-        subject.should.not.have.css({backgroundColor: 'blue'});
+      it("passes negated when the element's css does not have the property", function(){
+        subject.should.not.have.css('nonexistent');
       });
 
-      it("fails when the elemnt does not have the given css attribute", function(){
+      it("fails when the element's css does not have the property", function(){
         (function(){
-          subject.should.have.css({backgroundColor: 'blue'});
-        }).should.fail("expected <div style=\"background-color:red;position:absolute;\"></div> to have css { backgroundColor: 'blue' }")
+          subject.should.have.css('nonexistent');
+        }).should.fail("expected " + inspect(subject) + " to have a 'nonexistent' CSS property");
       });
 
-      it("fails negated when the elemnt has the given css attribute", function(){
+      it("fails negated when the element's css has the property", function(){
         (function(){
-          subject.should.not.have.css({backgroundColor: 'red'});
-        }).should.fail("expected <div style=\"background-color:red;position:absolute;\"></div> to not have css { backgroundColor: 'red' }")
+          subject.should.not.have.css('background-color');
+        }).should.fail("expected " + inspect(subject) + " not to have a 'background-color' CSS property");
       });
     });
 
-    describe("when more than one css attribute is passed", function(){
-      it("passes when the elemnt has the given css attribute", function(){
-        subject.should.have.css({backgroundColor: 'red', position: 'absolute'});
+    describe("when property name and value are provided", function(){
+      it("passes when the element's css has the property with the given value", function(){
+        subject.should.have.css('background-color', 'red');
       });
 
-      it("passes negated when the elemnt does not have the given css attribute", function(){
-        subject.should.not.have.css({backgroundColor: 'blue', position: 'relative'});
+      it("passes negated when the element's css does not have the given property", function(){
+        subject.should.not.have.css('display', 'none');
       });
 
-      it("fails when the elemnt does not have any of the given css attributes", function(){
+      it("passes negated when the element's css has the property with a different value", function(){
+        subject.should.not.have.css('background-color', 'blue');
+      });
+
+      it("fails when the element's css does not have the property", function(){
         (function(){
-          subject.should.have.css({backgroundColor: 'blue', position: 'relative'});
-        }).should.fail("expected <div style=\"background-color:red;position:absolute;\"></div> to have css { backgroundColor: 'blue' }")
+          subject.should.have.css('nonexistent', 'none');
+        }).should.fail("expected " + inspect(subject) + " to have a 'nonexistent' CSS property");
       });
 
-      it("fails negated when the elemnt has all the given css attributes", function(){
+      it("fails when the element's css has the property with a different value", function(){
         (function(){
-          subject.should.not.have.css({backgroundColor: 'red', position: 'absolute'});
-        }).should.fail("expected <div style=\"background-color:red;position:absolute;\"></div> to not have css { backgroundColor: 'red' }")
+          subject.should.have.css('background-color', 'blue');
+        }).should.fail("expected " + inspect(subject) + " to have a 'background-color' CSS property with the value 'blue', but the value was 'red'")
       });
 
-      it("fails when the elemnt has the first css attribute, but none of the rest", function(){
+      it("fails negated when the element's css has the property with the given value", function(){
         (function(){
-          subject.should.have.css({backgroundColor: 'red', position: 'relative'});
-        }).should.fail("expected <div style=\"background-color:red;position:absolute;\"></div> to have css { position: 'relative' }")
+          subject.should.not.have.css('background-color', 'red');
+        }).should.fail("expected " + inspect(subject) + " not to have a 'background-color' CSS property with the value 'red'")
       });
+    });
 
-      it("fails negated when the elemnt does not have the first css attribute, but all of the rest", function(){
-        (function(){
-          subject.should.not.have.css({backgroundColor: 'blue', position: 'absolute'});
-        }).should.fail("expected <div style=\"background-color:red;position:absolute;\"></div> to not have css { position: 'absolute' }")
-      });
+    it("chains", function(){
+      subject.should.have.css('background-color').equal('red');
     });
   });
 
@@ -519,17 +521,8 @@ describe("jQuery assertions", function(){
       ({}).should.be.empty;
     });
 
-    var empty, nonempty;
-
-    beforeEach(function(){
-      $('#mocha').append('<div class="empty"></div>').append('<div class="nonempty"><span></span></div>');
-      empty = $('.empty');
-      nonempty = $('.nonempty');
-    });
-
-    afterEach(function(){
-      $(empty, nonempty).remove();
-    });
+    var empty    = $('<div></div>');
+    var nonempty = $('<div><span></span></div>');
 
     it("passes when the elment has no children", function(){
       empty.should.be.empty;
@@ -542,13 +535,13 @@ describe("jQuery assertions", function(){
     it("fails when the elment has children", function(){
       (function(){
         nonempty.should.be.empty;
-      }).should.fail("expected '.nonempty' to be empty");
+      }).should.fail("expected " + inspect(nonempty) + " to be empty");
     });
 
     it("fails negated when the elment has no children", function(){
       (function(){
         empty.should.not.be.empty;
-      }).should.fail("expected '.empty' not to be empty");
+      }).should.fail("expected " + inspect(empty) + " not to be empty");
     });
   });
 

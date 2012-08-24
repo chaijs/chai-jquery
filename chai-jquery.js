@@ -27,30 +27,35 @@
     return el.html();
   };
 
-  chai.Assertion.addMethod('attr', function (name, val) {
-    var actual = flag(this, 'object').attr(name);
+  var props = {attr: 'attribute', css: 'CSS property'};
+  for (var prop in props) {
+    (function (prop, description) {
+      chai.Assertion.addMethod(prop, function (name, val) {
+        var actual = flag(this, 'object')[prop](name);
 
-    if (!flag(this, 'negate') || undefined === val) {
-      this.assert(
-          undefined !== actual
-        , 'expected #{this} to have a #{exp} attribute'
-        , 'expected #{this} not to have a #{exp} attribute'
-        , name
-      );
-    }
+        if (!flag(this, 'negate') || undefined === val) {
+          this.assert(
+              undefined !== actual
+            , 'expected #{this} to have a #{exp} ' + description
+            , 'expected #{this} not to have a #{exp} ' + description
+            , name
+          );
+        }
 
-    if (undefined !== val) {
-      this.assert(
-          val === actual
-        , 'expected #{this} to have a ' + inspect(name) + ' attribute with the value #{exp}, but the value was #{act}'
-        , 'expected #{this} not to have a ' + inspect(name) + ' attribute with the value #{act}'
-        , val
-        , actual
-      );
-    }
+        if (undefined !== val) {
+          this.assert(
+              val === actual
+            , 'expected #{this} to have a ' + inspect(name) + ' ' + description + ' with the value #{exp}, but the value was #{act}'
+            , 'expected #{this} not to have a ' + inspect(name) + ' ' + description + ' with the value #{act}'
+            , val
+            , actual
+          );
+        }
 
-    flag(this, 'object', actual);
-  });
+        flag(this, 'object', actual);
+      });
+    })(prop, props[prop]);
+  }
 
   chai.Assertion.addMethod('data', function (name, val) {
     // Work around a chai bug (https://github.com/logicalparadox/chai/issues/16)
@@ -109,21 +114,6 @@
     );
   });
 
-  chai.Assertion.addMethod('css', function (css) {
-    var obj = flag(this, 'object');
-    var currentCss = {};
-    for (var prop in css) {
-      currentCss[prop] = css[prop]
-      this.assert(
-          obj.css(prop) === css[prop]
-        , 'expected #{this} to have css #{exp}'
-        , 'expected #{this} to not have css #{exp}'
-        , currentCss
-      );
-      delete currentCss[prop]
-    }
-  });
-
   jQuery.each(['visible', 'hidden', 'selected', 'checked', 'disabled'], function (i, attr) {
     chai.Assertion.addProperty(attr, function () {
       this.assert(
@@ -152,9 +142,9 @@
       var obj = flag(this, 'object');
       if (obj instanceof jQuery) {
         this.assert(
-            obj.children().length === 0
-          , 'expected ' + inspect(obj.selector) + ' to be empty'
-          , 'expected ' + inspect(obj.selector) + ' not to be empty');
+          obj.is(':empty')
+          , 'expected #{this} to be empty'
+          , 'expected #{this} not to be empty');
       } else {
         _super.apply(this, arguments);
       }
