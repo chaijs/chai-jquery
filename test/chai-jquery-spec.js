@@ -150,11 +150,11 @@ describe("jQuery assertions", function(){
   });
 
   describe("css", function(){
-    var subject = $('<div style="background-color:red;position:absolute;"></div>');
+    var subject = $('<div style="position:absolute;"></div>');
 
     describe("when only property name is provided", function(){
       it("passes when the element's css has the property", function(){
-        subject.should.have.css('background-color');
+        subject.should.have.css('position');
       });
 
       it("passes negated when the element's css does not have the property", function(){
@@ -169,14 +169,14 @@ describe("jQuery assertions", function(){
 
       it("fails negated when the element's css has the property", function(){
         (function(){
-          subject.should.not.have.css('background-color');
-        }).should.fail("expected " + inspect(subject) + " not to have a 'background-color' CSS property");
+          subject.should.not.have.css('position');
+        }).should.fail("expected " + inspect(subject) + " not to have a 'position' CSS property");
       });
     });
 
     describe("when property name and value are provided", function(){
       it("passes when the element's css has the property with the given value", function(){
-        subject.should.have.css('background-color', 'red');
+        subject.should.have.css('position', 'absolute');
       });
 
       it("passes negated when the element's css does not have the given property", function(){
@@ -184,7 +184,7 @@ describe("jQuery assertions", function(){
       });
 
       it("passes negated when the element's css has the property with a different value", function(){
-        subject.should.not.have.css('background-color', 'blue');
+        subject.should.not.have.css('position', 'relative');
       });
 
       it("fails when the element's css does not have the property", function(){
@@ -195,19 +195,19 @@ describe("jQuery assertions", function(){
 
       it("fails when the element's css has the property with a different value", function(){
         (function(){
-          subject.should.have.css('background-color', 'blue');
-        }).should.fail("expected " + inspect(subject) + " to have a 'background-color' CSS property with the value 'blue', but the value was 'red'")
+          subject.should.have.css('position', 'relative');
+        }).should.fail("expected " + inspect(subject) + " to have a 'position' CSS property with the value 'relative', but the value was 'absolute'")
       });
 
       it("fails negated when the element's css has the property with the given value", function(){
         (function(){
-          subject.should.not.have.css('background-color', 'red');
-        }).should.fail("expected " + inspect(subject) + " not to have a 'background-color' CSS property with the value 'red'")
+          subject.should.not.have.css('position', 'absolute');
+        }).should.fail("expected " + inspect(subject) + " not to have a 'position' CSS property with the value 'absolute'")
       });
     });
 
     it("chains", function(){
-      subject.should.have.css('background-color').equal('red');
+      subject.should.have.css('position').equal('absolute');
     });
   });
 
