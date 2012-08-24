@@ -61,7 +61,7 @@
     var assertion = new chai.Assertion(flag(this, 'object').data());
     if (flag(this, 'negate'))
       assertion = assertion.not;
-    assertion.property(name, val);
+    return assertion.property(name, val);
   });
 
   chai.Assertion.addMethod('class', function (className) {

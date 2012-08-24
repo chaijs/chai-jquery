@@ -83,7 +83,7 @@ describe("jQuery assertions", function(){
     });
 
     it("chains", function(){
-      $('<div name="foo"></div>').should.have.attr('name').equal('foo');
+      subject.should.have.attr('name').equal('foo');
     });
   });
 
@@ -145,7 +145,7 @@ describe("jQuery assertions", function(){
     });
 
     it("chains", function(){
-      $('<div name="foo"></div>').should.have.attr('name').equal('foo');
+      subject.should.have.data('name').equal('foo');
     });
   });
 
