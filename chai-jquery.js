@@ -109,6 +109,21 @@
     );
   });
 
+  chai.Assertion.addMethod('css', function (css) {
+    var obj = flag(this, 'object');
+    var currentCss = {};
+    for (var prop in css) {
+      currentCss[prop] = css[prop]
+      this.assert(
+          obj.css(prop) === css[prop]
+        , 'expected #{this} to have css #{exp}'
+        , 'expected #{this} to not have css #{exp}'
+        , currentCss
+      );
+      delete currentCss[prop]
+    }
+  });
+
   jQuery.each(['visible', 'hidden', 'selected', 'checked', 'disabled'], function (i, attr) {
     chai.Assertion.addProperty(attr, function () {
       this.assert(
@@ -126,6 +141,20 @@
             obj.length > 0
           , 'expected ' + inspect(obj.selector) + ' to exist'
           , 'expected ' + inspect(obj.selector) + ' not to exist');
+      } else {
+        _super.apply(this, arguments);
+      }
+    };
+  });
+
+  chai.Assertion.overwriteProperty('empty', function (_super) {
+    return function () {
+      var obj = flag(this, 'object');
+      if (obj instanceof jQuery) {
+        this.assert(
+            obj.children().length === 0
+          , 'expected ' + inspect(obj.selector) + ' to be empty'
+          , 'expected ' + inspect(obj.selector) + ' not to be empty');
       } else {
         _super.apply(this, arguments);
       }
