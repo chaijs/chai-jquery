@@ -68,37 +68,38 @@ Assert that the first element of the selection has the given value, using [`.val
     expect($('.year')).to.have.value('2012');
 
 ### `visible`
-Assert that the first element of the selection is visible, using [`.is(':visible')`](http://api.jquery.com/:visible/).
+Assert that at least one element of the selection is visible, using [`.is(':visible')`](http://api.jquery.com/:visible/).
 
     $('.name').should.be.visible;
     expect($('.year')).to.be.visible;
 
 ### `hidden`
-Assert that the first element of the selection is hidden, using [`.is(':hidden')`](http://api.jquery.com/:hidden/).
+Assert that at least one element of the selection is hidden, using [`.is(':hidden')`](http://api.jquery.com/:hidden/).
 
     $('.name').should.be.hidden;
     expect($('.year')).to.be.hidden;
 
 ### `selected`
-Assert that the first element of the selection is selected, using [`.is(':selected')`](http://api.jquery.com/:selected/).
+Assert that at least one element of the selection is selected, using [`.is(':selected')`](http://api.jquery.com/:selected/).
 
     $('option').should.be.selected;
     expect($('option')).not.to.be.selected;
 
 ### `checked`
-Assert that the first element of the selection is checked, using [`.is(':checked')`](http://api.jquery.com/:checked/).
+Assert that at least one element of the selection is checked, using [`.is(':checked')`](http://api.jquery.com/:checked/).
 
     $('.checked').should.be.checked;
     expect($('input')).not.to.be.checked;
 
 ### `disabled`
-Assert that the first element of the selection is disabled, using [`.is(':disabled')`](http://api.jquery.com/:disabled/).
+Assert that at least one element of the selection is disabled, using [`.is(':disabled')`](http://api.jquery.com/:disabled/).
 
     $('.disabled').should.be.disabled;
     expect($('input')).not.to.be.disabled;
 
 ### `empty`
-Assert that the first element of the selection is empty, using [`.is(':empty')`](http://api.jquery.com/empty-selector/).
+Assert that at least one element of the selection is empty, using [`.is(':empty')`](http://api.jquery.com/empty-selector/).
+If the object asserted against is not a jQuery object, the original implementation will be called.
 
     $('.empty').should.be.empty;
     expect($('body')).not.to.be.empty;
