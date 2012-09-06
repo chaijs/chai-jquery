@@ -50,13 +50,13 @@ Assert that the first element of the selection has the given id, using `.attr('i
     expect($('body')).to.have.id('foo');
 
 ### `html(html)`
-Assert that the first element of the selection has the given html, using [`.html()`](http://api.jquery.com/html/).
+Assert that the html of the first element of the selection is equal to the given html, using [`.html()`](http://api.jquery.com/html/).
 
     $('.name').should.have.html('<em>John Doe</em>');
     expect($('#title')).to.have.html('Chai Tea');
 
 ### `text(text)`
-Assert that the first element of the selection has the given text, using [`.text()`](http://api.jquery.com/text/).
+Assert that the text of the first element of the selection is equal to the given text, using [`.text()`](http://api.jquery.com/text/).
 
     $('.name').should.have.text('John Doe');
     expect($('#title')).to.have.text('Chai Tea');
@@ -120,7 +120,7 @@ not a jQuery object, or if `be` is not called as a function, the original implem
     $('input').should.match('#foo');
     expect($('#empty')).to.be(':empty');
 
-### `contain(selector)`
+### `contain(text)`
 Assert that the selection contains the given text, using [`:contains()`](http://api.jquery.com/contains-selector/).
 If the object asserted against is not a jQuery object, or if `contain` is not called as a function, the original
 implementation will be called.
