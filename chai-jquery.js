@@ -18,7 +18,7 @@
 
   jQuery.fn.inspect = function (depth) {
     var el = jQuery('<div />').append(this.clone());
-    if (depth) {
+    if (depth !== undefined) {
       var children = el.children();
       while (depth-- > 0)
         children = children.children();
