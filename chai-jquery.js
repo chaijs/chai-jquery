@@ -5,19 +5,24 @@
     module.exports = chaiJquery;
   } else if (typeof define === "function" && define.amd) {
     // AMD
-    define(function () {
-      return chaiJquery;
+    define(['jquery'], function ($) {
+      return function (chai, utils) {
+        return chaiJquery(chai, utils, $);
+      };
     });
   } else {
     // Other environment (usually <script> tag): plug in to global chai instance directly.
-    chai.use(chaiJquery);
+    chai.use(function (chai, utils) {
+      return chaiJquery(chai, utils, jQuery);
+    });
   }
-}(function (chai, utils) {
+}(function (chai, utils, $) {
   var inspect = utils.inspect,
       flag = utils.flag;
+  $ = $ || jQuery;
 
-  jQuery.fn.inspect = function (depth) {
-    var el = jQuery('<div />').append(this.clone());
+  $.fn.inspect = function (depth) {
+    var el = $('<div />').append(this.clone());
     if (depth !== undefined) {
       var children = el.children();
       while (depth-- > 0)
@@ -114,7 +119,7 @@
     );
   });
 
-  jQuery.each(['visible', 'hidden', 'selected', 'checked', 'disabled'], function (i, attr) {
+  $.each(['visible', 'hidden', 'selected', 'checked', 'disabled'], function (i, attr) {
     chai.Assertion.addProperty(attr, function () {
       this.assert(
           flag(this, 'object').is(':' + attr)
@@ -126,7 +131,7 @@
   chai.Assertion.overwriteProperty('exist', function (_super) {
     return function () {
       var obj = flag(this, 'object');
-      if (obj instanceof jQuery) {
+      if (obj instanceof $) {
         this.assert(
             obj.length > 0
           , 'expected ' + inspect(obj.selector) + ' to exist'
@@ -140,7 +145,7 @@
   chai.Assertion.overwriteProperty('empty', function (_super) {
     return function () {
       var obj = flag(this, 'object');
-      if (obj instanceof jQuery) {
+      if (obj instanceof $) {
         this.assert(
           obj.is(':empty')
           , 'expected #{this} to be empty'
@@ -155,7 +160,7 @@
     return function () {
       var be = function (selector) {
         var obj = flag(this, 'object');
-        if (obj instanceof jQuery) {
+        if (obj instanceof $) {
           this.assert(
               obj.is(selector)
             , 'expected #{this} to be #{exp}'
@@ -174,7 +179,7 @@
   chai.Assertion.overwriteMethod('match', function (_super) {
     return function (selector) {
       var obj = flag(this, 'object');
-      if (obj instanceof jQuery) {
+      if (obj instanceof $) {
         this.assert(
             obj.is(selector)
           , 'expected #{this} to match #{exp}'
@@ -192,7 +197,7 @@
       _super.call(this);
       var contain = function (text) {
         var obj = flag(this, 'object');
-        if (obj instanceof jQuery) {
+        if (obj instanceof $) {
           this.assert(
               obj.is(':contains(\'' + text + '\')')
             , 'expected #{this} to contain #{exp}'
@@ -211,7 +216,7 @@
   chai.Assertion.overwriteProperty('have', function (_super) {
     return function () {
       var obj = flag(this, 'object');
-      if (obj instanceof jQuery) {
+      if (obj instanceof $) {
         var have = function (selector) {
           this.assert(
               // Using find() rather than has() to work around a jQuery bug:
