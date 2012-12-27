@@ -136,6 +136,11 @@ is not called as a function, the original implementation will be called.
     $('body').should.have('h1');
     expect($('#content')).to.have('div');
 
+Note that this assertion has the unfortunate side effect of causing assertions such as
+`expect(selection).to.have.length(2)` to fail. The technical cause is that the `have` property must be a function,
+and functions have a built-in `length` property that cannot be modified. As as workaround, write the assertion
+as `expect(selection).to.be.of.length(2)` instead.
+
 ## Contributing
 
 To run the test suite, run `npm install` (requires
