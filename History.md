@@ -1,5 +1,7 @@
 # master
 
+# 1.1.1
+
 * Support inspect with 0 depth
 * Set jQuery as an AMD dependency
 
