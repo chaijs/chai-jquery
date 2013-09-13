@@ -21,6 +21,29 @@
       flag = utils.flag;
   $ = $ || jQuery;
 
+  var excludeNames = /^(?:length|name|arguments|caller)$/;
+  var hasProtoSupport =  '__proto__' in Object;
+
+  var setProto = function(target, proto) {
+
+    var copyProperties = function(copyToObj, copyFromObj) {
+      var propertyNames = Object.getOwnPropertyNames(copyFromObj);
+      propertyNames.forEach(function (propertyName) {
+        if (!excludeNames.test(propertyName)) {
+          var pd = Object.getOwnPropertyDescriptor(copyFromObj, propertyName);
+          Object.defineProperty(copyToObj, propertyName, pd);
+        }
+      });
+    };
+
+    if(hasProtoSupport) {
+      target.__proto__ = proto;
+    } else {
+      copyProperties(target, proto);
+      copyProperties(target, Object.getPrototypeOf(proto));
+    }
+  };
+
   $.fn.inspect = function (depth) {
     var el = $('<div />').append(this.clone());
     if (depth !== undefined) {
@@ -171,7 +194,7 @@
           _super.apply(this, arguments);
         }
       };
-      be.__proto__ = this;
+      setProto(be, this);
       return be;
     }
   });
@@ -208,7 +231,7 @@
           Function.prototype.apply.call(_super.call(this), this, arguments);
         }
       };
-      contain.__proto__ = this;
+      setProto(contain, this);
       return contain;
     }
   });
@@ -227,7 +250,7 @@
             , selector
           );
         };
-        have.__proto__ = this;
+        setProto(have, this);
         return have;
       } else {
         _super.call(this);
