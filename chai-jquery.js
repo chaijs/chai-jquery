@@ -21,28 +21,25 @@
       flag = utils.flag;
   $ = $ || jQuery;
 
-  var excludeNames = /^(?:length|name|arguments|caller)$/;
-  var hasProtoSupport =  '__proto__' in Object;
+  var setPrototypeOf = '__proto__' in Object ?
+    function (object, prototype) {
+      object.__proto__ = prototype;
+    } :
+    function (object, prototype) {
+      var excludeNames = /^(?:length|name|arguments|caller)$/;
 
-  var setProto = function(target, proto) {
+      function copyProperties(dst, src) {
+        Object.getOwnPropertyNames(src).forEach(function (name) {
+          if (!excludeNames.test(name)) {
+            Object.defineProperty(dst, name,
+              Object.getOwnPropertyDescriptor(src, name));
+          }
+        });
+      }
 
-    var copyProperties = function(copyToObj, copyFromObj) {
-      var propertyNames = Object.getOwnPropertyNames(copyFromObj);
-      propertyNames.forEach(function (propertyName) {
-        if (!excludeNames.test(propertyName)) {
-          var pd = Object.getOwnPropertyDescriptor(copyFromObj, propertyName);
-          Object.defineProperty(copyToObj, propertyName, pd);
-        }
-      });
+      copyProperties(object, prototype);
+      copyProperties(object, Object.getPrototypeOf(prototype));
     };
-
-    if(hasProtoSupport) {
-      target.__proto__ = proto;
-    } else {
-      copyProperties(target, proto);
-      copyProperties(target, Object.getPrototypeOf(proto));
-    }
-  };
 
   $.fn.inspect = function (depth) {
     var el = $('<div />').append(this.clone());
@@ -194,7 +191,7 @@
           _super.apply(this, arguments);
         }
       };
-      setProto(be, this);
+      setPrototypeOf(be, this);
       return be;
     }
   });
@@ -231,7 +228,7 @@
           Function.prototype.apply.call(_super.call(this), this, arguments);
         }
       };
-      setProto(contain, this);
+      setPrototypeOf(contain, this);
       return contain;
     }
   });
@@ -250,7 +247,7 @@
             , selector
           );
         };
-        setProto(have, this);
+        setPrototypeOf(have, this);
         return have;
       } else {
         _super.call(this);
