@@ -1,5 +1,9 @@
 # master
 
+# 1.1.2
+
+* Support for IE and other implementations without __proto__.
+
 # 1.1.1
 
 * Support inspect with 0 depth
