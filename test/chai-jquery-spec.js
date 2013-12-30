@@ -211,6 +211,98 @@ describe("jQuery assertions", function(){
     });
   });
 
+  describe("prop", function(){
+    var subject = $('<input type="checkbox" checked></input>');
+
+    describe("when only property name is provided", function(){
+      it("passes when the element has the property", function(){
+        subject.should.have.prop('checked');
+      });
+
+      it("passes when the property exists by default", function(){
+        subject.should.have.prop('disabled');
+      });
+
+      it("passes negated when the property does not exists by default", function(){
+        subject.should.not.have.prop('selectedIndex');
+      });
+
+      it("fails negated when the element has the property", function(){
+        (function(){
+          subject.should.not.have.prop('checked');
+        }).should.fail("expected " + inspect(subject) + " not to have a 'checked' property");
+      });
+
+      it("fails negated when the property exists by default", function(){
+        (function(){
+          subject.should.not.have.prop('disabled');
+        }).should.fail("expected " + inspect(subject) + " not to have a 'disabled' property");
+      });
+
+      it("fails when the element does not have the property", function(){
+        (function(){
+          subject.should.have.prop('selectedIndex');
+        }).should.fail("expected " + inspect(subject) + " to have a 'selectedIndex' property")
+      });
+    });
+
+    describe("when property name and value are provided", function(){
+      it("passes when the element has the property with the given value", function(){
+        subject.should.have.prop('checked', true);
+      });
+
+      it("passes when the property has the given value by default", function(){
+        subject.should.have.prop('disabled', false);
+      });
+
+      it("passes negated when the element has the property with a different value", function(){
+        subject.should.not.have.prop('checked', false);
+      });
+
+      it("passes negated when the property has a different value by default", function(){
+        subject.should.not.have.prop('disabled', true);
+      });
+
+      it("passes negated when the property does not exists by default", function(){
+        subject.should.not.have.prop('selectedIndex', 0);
+      });
+
+      it("fails when the element has the property with a different value", function(){
+        (function(){
+          subject.should.have.prop('checked', false);
+        }).should.fail("expected " + inspect(subject) + " to have a 'checked' property with the value false, but the value was true")
+      });
+
+      it("fails when the property has a different value by default", function(){
+        (function(){
+          subject.should.have.prop('disabled', true);
+        }).should.fail("expected " + inspect(subject) + " to have a 'disabled' property with the value true, but the value was false")
+      });
+
+      it("fails when the property does not exist by default", function(){
+        (function(){
+          subject.should.have.prop('selectedIndex', 0);
+        }).should.fail("expected " + inspect(subject) + " to have a 'selectedIndex' property");
+      });
+
+      it("fails negated when the element has the property with the given value", function(){
+        (function(){
+          subject.should.not.have.prop('checked', true);
+        }).should.fail("expected " + inspect(subject) + " not to have a 'checked' property with the value true")
+      });
+
+      it("fails negated when the property has the given value by default", function(){
+        (function(){
+          subject.should.not.have.prop('disabled', false);
+        }).should.fail("expected " + inspect(subject) + " not to have a 'disabled' property with the value false")
+      });
+    });
+
+    it("chains", function(){
+      subject.should.have.prop('checked').equal(true);
+    });
+  });
+
   describe("class", function(){
     var subject = $('<div class="foo"></div>');
 
