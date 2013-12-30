@@ -1,5 +1,10 @@
 # master
 
+# 1.2.0
+
+* Add `enabled` assertion
+* Add `prop` assertion
+
 # 1.1.2
 
 * Support for IE and other implementations without __proto__.

@@ -3,7 +3,7 @@
   "name": "chai-jquery",
   "description": "jQuery assertions for the Chai assertion library",
   "keywords": [ "test", "assertion", "assert", "testing", "jQuery" ],
-  "version": "1.1.2",
+  "version": "1.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/chaijs/chai-jquery"
