@@ -21,6 +21,14 @@ Optionally, assert a particular value as well. The return value is available for
     expect($('body')).to.have.attr('foo', 'bar');
     expect($('body')).to.have.attr('foo').match(/bar/);
 
+### `prop(name[, value])`
+Assert that the first element of the selection has the given property, using [`.prop()`](http://api.jquery.com/prop/).
+Optionally, assert a particular value as well. The return value is available for chaining.
+
+    $('#header').should.have.prop('disabled');
+    expect($('body')).to.have.prop('disabled', false);
+    expect($('body')).to.have.prop('value').match(/bar/);
+
 ### `css(name[, value])`
 Assert that the first element of the selection has the given CSS property, using [`.css()`](http://api.jquery.com/css/).
 Optionally, assert a particular value as well. The return value is available for chaining.
