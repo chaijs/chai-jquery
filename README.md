@@ -99,6 +99,12 @@ Assert that at least one element of the selection is checked, using [`.is(':chec
     $('.checked').should.be.checked;
     expect($('input')).not.to.be.checked;
 
+### `enabled`
+Assert that at least one element of the selection is enabled, using [`.is(':enabled')`](http://api.jquery.com/:enabled/).
+
+    $('.enabled').should.be.enabled;
+    expect($('enabled')).to.be.enabled;
+
 ### `disabled`
 Assert that at least one element of the selection is disabled, using [`.is(':disabled')`](http://api.jquery.com/:disabled/).
 

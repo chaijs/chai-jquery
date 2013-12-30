@@ -550,6 +550,31 @@ describe("jQuery assertions", function(){
     });
   });
 
+  describe("enabled", function(){
+    var disabled = $('<input disabled="disabled">');
+    var enabled  = $('<input>');
+
+    it("passes when the element is enabled", function(){
+      enabled.should.be.enabled;
+    });
+
+    it("passes negated when the element is disabled", function(){
+      disabled.should.not.be.enabled;
+    });
+
+    it("fails when the element is disabled", function(){
+      (function(){
+        disabled.should.be.enabled;
+      }).should.fail("expected " + inspect(disabled) + " to be enabled");
+    });
+
+    it("fails negated when element is enabled", function(){
+      (function(){
+        enabled.should.not.be.enabled;
+      }).should.fail("expected " + inspect(enabled) + " not to be enabled");
+    });
+  });
+
   describe("disabled", function(){
     var disabled = $('<input disabled="disabled">');
     var enabled  = $('<input>');
