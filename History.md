@@ -1,5 +1,9 @@
 # master
 
+# 1.2.1
+
+* Fix chainability of `contain`
+
 # 1.2.0
 
 * Add `enabled` assertion
