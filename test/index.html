@@ -11,7 +11,7 @@
       mocha.setup('bdd');
       var should = chai.should();
       window.onload = function () {
-        mocha.run();
+        (window.mochaPhantomJS || window.mocha).run();
       };
     </script>
     <script src="jquery-inspect-spec.js"></script>
