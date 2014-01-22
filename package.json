@@ -21,6 +21,7 @@
   "devDependencies": {
     "chai": "1",
     "mocha": "1",
-    "mocha-phantomjs": "3"
+    "mocha-phantomjs": "3",
+    "jquery": "2"
   }
 }
