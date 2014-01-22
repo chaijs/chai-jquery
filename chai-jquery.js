@@ -225,7 +225,7 @@
             , text
           );
         } else {
-          Function.prototype.apply.call(_super.call(this), this, arguments);
+          return Function.prototype.apply.call(_super.call(this), this, arguments);
         }
       };
       setPrototypeOf(contain, this);

@@ -726,7 +726,11 @@ describe("jQuery assertions", function(){
 
       (function(){
         "foo".should.contain('bar');
-      }).should.fail("expected 'foo' to include 'bar'")
+      }).should.fail("expected 'foo' to include 'bar'");
+
+      (function(){
+        "foo".should.not.contain('bar').and.not.contain('foo');
+      }).should.fail("expected 'foo' to not include 'foo'");
     });
 
     var subject = $('<div><span>example text</span></div>');
