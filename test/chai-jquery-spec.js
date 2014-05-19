@@ -400,7 +400,7 @@ describe("jQuery assertions", function(){
     it("fails when the text doesn't match", function(){
       (function(){
         subject.should.have.text("bar");
-      }).should.fail("expected " + inspect(subject) + " to have text 'bar'");
+      }).should.fail("expected " + inspect(subject) + " to have text 'bar', but the text was 'foo'");
     });
 
     it("fails negated when the text matches", function(){

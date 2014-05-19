@@ -124,11 +124,13 @@
   });
 
   chai.Assertion.addMethod('text', function (text) {
+    var actual = flag(this, 'object').text();
     this.assert(
-        flag(this, 'object').text() === text
-      , 'expected #{this} to have text #{exp}'
+        actual === text
+      , 'expected #{this} to have text #{exp}, but the text was #{act}'
       , 'expected #{this} not to have text #{exp}'
       , text
+      , actual
     );
   });
 
