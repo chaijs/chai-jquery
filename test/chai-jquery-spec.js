@@ -424,7 +424,7 @@ describe("jQuery assertions", function(){
     it("fails when the value doesn't match", function(){
       (function(){
         subject.should.have.value("bar");
-      }).should.fail("expected " + inspect(subject) + " to have value 'bar'");
+      }).should.fail("expected " + inspect(subject) + " to have value 'bar', but the value was 'foo'");
     });
 
     it("fails negated when the value matches", function(){
