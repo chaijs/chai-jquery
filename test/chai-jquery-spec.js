@@ -376,7 +376,7 @@ describe("jQuery assertions", function(){
     it("fails when the HTML doesn't match", function(){
       (function(){
         subject.should.have.html("<span>div</span>");
-      }).should.fail("expected " + inspect(subject) + " to have HTML '<span>div</span>'");
+      }).should.fail("expected " + inspect(subject) + " to have HTML '<span>div</span>', but the HTML was '<span>span</span>'");
     });
 
     it("fails negated when the HTML matches", function(){
