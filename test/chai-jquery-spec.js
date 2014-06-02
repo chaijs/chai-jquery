@@ -702,7 +702,7 @@ describe("jQuery assertions", function(){
     it("preserves existing behavior when used incorrectly", function(){
       (function(){
         (1 + 1).should.be(3);
-      }).should.throw(TypeError, "object is not a function");
+      }).should.throw(TypeError, "is not a function");
     });
 
     var subject = $('<div></div>');
