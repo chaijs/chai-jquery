@@ -145,6 +145,15 @@
     );
   });
 
+  chai.Assertion.addMethod('descendants', function (selector) {
+    this.assert(
+        flag(this, 'object').has(selector).length > 0
+      , 'expected #{this} to have #{exp}'
+      , 'expected #{this} not to have #{exp}'
+      , selector
+    );
+  });
+
   $.each(['visible', 'hidden', 'selected', 'checked', 'enabled', 'disabled'], function (i, attr) {
     chai.Assertion.addProperty(attr, function () {
       this.assert(
@@ -180,27 +189,6 @@
         _super.apply(this, arguments);
       }
     };
-  });
-
-  chai.Assertion.overwriteProperty('be', function (_super) {
-    return function () {
-      var obj = flag(this, 'object');
-      if (obj instanceof $) {
-        var be = function (selector) {
-          this.assert(
-              obj.is(selector)
-            , 'expected #{this} to be #{exp}'
-            , 'expected #{this} not to be #{exp}'
-            , selector
-          );
-        };
-        setPrototypeOf(be, this);
-        return be;
-      }
-      else {
-        _super.call(this);
-      }
-    }
   });
 
   chai.Assertion.overwriteMethod('match', function (_super) {
@@ -240,24 +228,4 @@
       };
     }
   );
-
-  chai.Assertion.overwriteProperty('have', function (_super) {
-    return function () {
-      var obj = flag(this, 'object');
-      if (obj instanceof $) {
-        var have = function (selector) {
-          this.assert(
-              obj.has(selector).length > 0
-            , 'expected #{this} to have #{exp}'
-            , 'expected #{this} not to have #{exp}'
-            , selector
-          );
-        };
-        setPrototypeOf(have, this);
-        return have;
-      } else {
-        _super.call(this);
-      }
-    }
-  });
 }));

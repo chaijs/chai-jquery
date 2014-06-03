@@ -125,14 +125,12 @@ against is not a jQuery object, the original implementation will be called.
     $('#exists').should.exist;
     expect($('#nonexistent')).not.to.exist;
 
-### `match(selector)` / `be(selector)`
-Assert that the selection matches a given selector, using [`.is()`](http://api.jquery.com/is/). Note that the
-built-in behavior of the `match` function and `be` property is preserved -- if the object asserted against is
-not a jQuery object, or if `be` is not called as a function, the original implementation will be called. Otherwise,
-`match` and `be` are synonyms -- use whichever one reads better.
+### `match(selector)`
+Assert that the selection matches a given selector, using [`.is()`](http://api.jquery.com/is/). Note that this overrides
+the built-in chai assertion. If the object asserted against is not a jQuery object, the original implementation will be called.
 
     $('input').should.match('#foo');
-    expect($('#empty')).to.be(':empty');
+    expect($('#empty')).to.match(':empty');
 
 ### `contain(text)`
 Assert that the selection contains the given text, using [`:contains()`](http://api.jquery.com/contains-selector/).
@@ -142,18 +140,12 @@ implementation will be called.
     $('body').should.contain('text');
     expect($('#content')).to.contain('text');
 
-### `have(selector)`
+### `descendants(selector)`
 Assert that the selection contains at least one element which has a descendant matching the given selector,
-using [`.has()`](http://api.jquery.com/has/). If the object asserted against is not a jQuery object, or if `have`
-is not called as a function, the original implementation will be called.
+using [`.has()`](http://api.jquery.com/has/).
 
-    $('body').should.have('h1');
-    expect($('#content')).to.have('div');
-
-Note that this assertion has the unfortunate side effect of causing assertions such as
-`expect(selection).to.have.length(2)` to fail. The technical cause is that the `have` property must be a function,
-and functions have a built-in `length` property that cannot be modified. As as workaround, write the assertion
-as `expect(selection).to.be.of.length(2)` instead.
+    $('body').should.have.descendants('h1');
+    expect($('#content')).to.have.descendants('div');
 
 ## Contributing
 

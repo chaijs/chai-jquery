@@ -690,44 +690,6 @@ describe("jQuery assertions", function(){
     });
   });
 
-  describe("be", function(){
-    it("preserves existing behavior on non-jQuery objects", function(){
-      ("hello").should.be.equal("hello");
-    });
-
-    it("preserves length assertion on non-jQuery objects", function(){
-      (['foo','bar']).should.be.of.length(2);
-    });
-
-    it("preserves existing behavior when used incorrectly", function(){
-      (function(){
-        (1 + 1).should.be(3);
-      }).should.throw(TypeError, "is not a function");
-    });
-
-    var subject = $('<div></div>');
-
-    it("passes when the selection matches the given selector", function(){
-      subject.should.be(':empty');
-    });
-
-    it("passes negated when the selection does not match the given selector", function(){
-      subject.should.not.be(':parent');
-    });
-
-    it("fails when the selection does not match the given selector", function(){
-      (function(){
-        subject.should.be(':parent');
-      }).should.fail("expected " + inspect(subject) + " to be ':parent'");
-    });
-
-    it("fails negated when the selection matches the given selector", function(){
-      (function(){
-        subject.should.not.be(":empty");
-      }).should.fail("expected " + inspect(subject) + " not to be ':empty'");
-    });
-  });
-
   describe("contain", function(){
     it("preserves existing behavior on non-jQuery objects", function(){
       "example text".should.contain('example');
@@ -771,34 +733,26 @@ describe("jQuery assertions", function(){
     });
   });
 
-  describe("have", function(){
-    it("preserves existing behavior on non-jQuery objects", function(){
-      ({foo: 1, bar: 2}).should.have.property('foo');
-    });
-
-    it("preserves length assertion on non-jQuery objects", function(){
-      (['foo','bar']).should.have.length(2);
-    });
-
+  describe("descendants", function(){
     var subject = $('<div><span></span></div>');
 
     it("passes when the selection has the given selector", function(){
-      subject.should.have('span');
+      subject.should.have.descendants('span');
     });
 
     it("passes negated when the selection does not have the given selector", function(){
-      subject.should.not.have('div');
+      subject.should.not.have.descendants('div');
     });
 
     it("fails when the selection does not have the given selector", function(){
       (function(){
-        subject.should.have('div');
+        subject.should.have.descendants('div');
       }).should.fail("expected " + inspect(subject) + " to have 'div'");
     });
 
     it("fails negated when the selection has the given selector", function(){
       (function(){
-        subject.should.not.have("span");
+        subject.should.not.have.descendants("span");
       }).should.fail("expected " + inspect(subject) + " not to have 'span'");
     });
   });
