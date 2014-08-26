@@ -219,26 +219,27 @@
     }
   });
 
-  chai.Assertion.overwriteProperty('contain', function (_super) {
-    return function () {
-      _super.call(this);
-      var contain = function (text) {
+  chai.Assertion.overwriteChainableMethod('contain',
+    function (_super) {
+      return function (text) {
         var obj = flag(this, 'object');
         if (obj instanceof $) {
           this.assert(
               obj.is(':contains(\'' + text + '\')')
             , 'expected #{this} to contain #{exp}'
             , 'expected #{this} not to contain #{exp}'
-            , text
-          );
+            , text);
         } else {
-          return Function.prototype.apply.call(_super.call(this), this, arguments);
+          _super.apply(this, arguments);
         }
+      }
+    },
+    function(_super) {
+      return function() {
+        _super.call(this);
       };
-      setPrototypeOf(contain, this);
-      return contain;
     }
-  });
+  );
 
   chai.Assertion.overwriteProperty('have', function (_super) {
     return function () {
