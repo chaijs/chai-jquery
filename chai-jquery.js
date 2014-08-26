@@ -246,9 +246,7 @@
       if (obj instanceof $) {
         var have = function (selector) {
           this.assert(
-              // Using find() rather than has() to work around a jQuery bug:
-              //   http://bugs.jquery.com/ticket/11706
-              obj.find(selector).length > 0
+              obj.has(selector).length > 0
             , 'expected #{this} to have #{exp}'
             , 'expected #{this} not to have #{exp}'
             , selector
