@@ -2,7 +2,7 @@
 
 # 2.0.0
 
-* Removed `be` assertion. Use `match` instead. Rename `have` to `descendants. (#47)
+* Removed `be` assertion. Use `match` instead. Rename `have` to `descendants`. (#47)
 
 # 1.2.3
 
