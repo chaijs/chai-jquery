@@ -5,7 +5,7 @@ provides a set of jQuery-specific assertions.
 
 ## Usage
 
-Include `chai-jquery.js` in your test file, after `chai.js` (version 1.0.0-rc1 or later):
+Include `chai-jquery.js` in your test file, after `jquery.js` and `chai.js` (version 1.0.0-rc1 or later):
 
     <script src="chai-jquery.js"></script>
 
