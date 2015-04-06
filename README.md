@@ -31,10 +31,10 @@ Optionally, assert a particular value as well. The return value is available for
 
 ### `css(name[, value])`
 Assert that the first element of the selection has the given CSS property, using [`.css()`](http://api.jquery.com/css/).
-Optionally, assert a particular value as well. The return value is available for chaining.
+Optionally, assert the computed value as well. The return value is available for chaining.
 
     $('#header').should.have.css('background');
-    expect($('body')).to.have.css('background-color', '#ffffff');
+    expect($('body')).to.have.css('background-color', 'rgb(0, 0, 0)');
     expect($('body')).to.have.css('font-family').match(/sans-serif/);
 
 ### `data(name[, value])`
