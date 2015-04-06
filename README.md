@@ -30,7 +30,7 @@ Optionally, assert a particular value as well. The return value is available for
     expect($('body')).to.have.prop('value').match(/bar/);
 
 ### `css(name[, value])`
-Assert that the first element of the selection has the given CSS property, using [`.css()`](http://api.jquery.com/css/). 
+Assert that the first element of the selection has the given CSS property, using [`.css()`](http://api.jquery.com/css/).
 Optionally, assert the computed value as well. The return value is available for chaining.
 
     $('#header').should.have.css('background');
