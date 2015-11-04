@@ -5,11 +5,15 @@ provides a set of jQuery-specific assertions.
 
 ## Usage
 
-Include `chai-jquery.js` in your test file, after `chai.js` (version 1.0.0-rc1 or later):
+Include `chai-jquery.js` in your test file, after `jquery.js` and `chai.js` (version 1.0.0-rc1 or later):
 
 ```html
+<script src="jquery.js"></script>
+<script src="chai.js"></script>
 <script src="chai-jquery.js"></script>
 ```
+
+Note that `jquery.js` and `chai.js` can be inserted one before another (order does not matter here).
 
 Use the assertions with chai's `expect` or `should` assertions.
 
