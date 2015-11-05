@@ -228,4 +228,11 @@
       };
     }
   );
+
+  chai.Assertion.addMethod('focus', function () {
+    this.assert(
+        flag(this, 'object').is(':focus')
+      , 'expected #{this} to have focus'
+      , 'expected #{this} not to have focus');
+  });
 }));
