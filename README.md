@@ -193,6 +193,15 @@ $('body').should.have.descendants('h1');
 expect($('#content')).to.have.descendants('div');
 ```
 
+### `focus()`
+Assert that at least one element of the selection is visible. Note that this assertion does not use [`.is(':focus')`](http://api.jquery.com/:focus/).
+It rather uses `$('.element').get(0) === document.activeElement`, because of [incompatibility of .is(':focus') in certain webkit browsers](https://github.com/ariya/phantomjs/issues/10427).
+
+```js
+$('#focused').should.have.focus();
+expect($('#nonfocused')).not.have.focus();
+```
+
 ## Contributing
 
 To run the test suite, run `npm install` (requires

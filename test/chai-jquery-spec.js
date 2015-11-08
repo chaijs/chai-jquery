@@ -756,4 +756,43 @@ describe("jQuery assertions", function(){
       }).should.fail("expected " + inspect(subject) + " not to have 'span'");
     });
   });
+
+  describe("focus", function(){
+    var focused = $('<input type="text" id="focused" name="focused">');
+    var blurred = $('<input type="text" id="blurred" name="blurred">');
+
+    beforeEach(function(done) {
+      focused.appendTo('#mocha');
+      blurred.appendTo('#mocha');
+      focused.on("focus", function () {
+        done();
+      });
+      focused.trigger("focus");
+    });
+
+    afterEach(function() {
+      focused.remove();
+      blurred.remove();
+    });
+
+    it("passes when the element has focus", function(){
+      focused.should.have.focus();
+    });
+
+    it("passes negated when the element does not have focus", function(){
+      blurred.should.not.have.focus();
+    });
+
+    it("fails when the element does not have focus", function(){
+      (function(){
+        blurred.should.have.focus();
+      }).should.fail("expected " + inspect(blurred) + " to have focus");
+    });
+
+    it("fails negated when element has focus", function(){
+      (function(){
+        focused.should.not.have.focus();
+      }).should.fail("expected " + inspect(focused) + " not to have focus");
+    });
+  });
 });
