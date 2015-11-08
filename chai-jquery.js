@@ -230,18 +230,10 @@
   );
 
   chai.Assertion.addMethod('focus', function () {
-    // workaround for Webkit-based browsers
-    // see https://github.com/ariya/phantomjs/issues/10427
-    var _jQuery_is = $.fn.is;
-    $.fn.is = function(s) {
-    if (s === ':focus') {
-      return this.get(0) === document.activeElement;
-    }
-      return _jQuery_is.apply(this, arguments);
-    };
-    
     this.assert(
-        flag(this, 'object').is(':focus')
+      // Can't use `$().is(':focus')` because of certain webkit browsers
+      // see https://github.com/ariya/phantomjs/issues/10427
+      flag(this, 'object').get(0) === document.activeElement
       , 'expected #{this} to have focus'
       , 'expected #{this} not to have focus');
   });
