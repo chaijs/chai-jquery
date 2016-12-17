@@ -102,7 +102,7 @@ describe("jQuery assertions", function(){
       it("fails when the element's data does not have the key", function(){
         (function(){
           subject.should.have.data('bar');
-        }).should.fail("expected { name: 'foo' } to have a property 'bar'");
+        }).should.fail("expected { name: 'foo' } to have property 'bar'");
       });
 
       it("fails negated when the element's data has the key", function(){
@@ -128,19 +128,19 @@ describe("jQuery assertions", function(){
       it("fails when the element's data does not have the key", function(){
         (function(){
           subject.should.have.data('bar', 'foo');
-        }).should.fail("expected { name: 'foo' } to have a property 'bar'");
+        }).should.fail("expected { name: 'foo' } to have property 'bar'");
       });
 
       it("fails when the element's data has the key with a different value", function(){
         (function(){
           subject.should.have.data('name', 'bar');
-        }).should.fail("expected { name: 'foo' } to have a property 'name' of 'bar', but got 'foo'")
+        }).should.fail("expected { name: 'foo' } to have property 'name' of 'bar', but got 'foo'")
       });
 
       it("fails negated when the element's data has the key with the given value", function(){
         (function(){
           subject.should.not.have.data('name', 'foo');
-        }).should.fail("expected { name: 'foo' } to not have a property 'name' of 'foo'")
+        }).should.fail("expected { name: 'foo' } to not have property 'name' of 'foo'")
       });
     });
 
