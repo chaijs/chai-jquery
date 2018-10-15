@@ -1,5 +1,13 @@
 # master
 
+# 2.1.0
+
+* Update README: Add description of scripts that need to be inserted for `chai-jquery` to work properly
+* feat: add focus assertion
+* Update package.json keywords
+* Denote jquery.js is required
+* Update for Chai v4.0
+
 # 2.0.1
 
 * Create bower.json
