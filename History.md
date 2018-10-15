@@ -1,5 +1,12 @@
 # master
 
+# 2.0.1
+
+* Create bower.json
+* Add syntax highlighting to README code snippets
+* Fix docs (incorrectly) indicating that `.css()` supports hex values (it does not)
+* Update History.md
+
 # 2.0.0
 
 * Removed `be` assertion. Use `match` instead. Rename `have` to `descendants`. (#47)
