@@ -10,7 +10,7 @@
   "main": ["./chai-jquery.js"],
   "ignore": [".git", ".gitignore", ".travis.yml", "test"],
   "devDependencies": {
-    "chai": "1",
+    "chai": "4",
     "mocha": "1",
     "mocha-phantomjs": "3",
     "jquery": "1.9.1 - 2"
